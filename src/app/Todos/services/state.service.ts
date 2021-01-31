@@ -1,6 +1,8 @@
 import { BehaviorSubject, Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 
+// Doc ref: https://dev.to/angular/simple-yet-powerful-state-management-in-angular-with-rxjs-4f8g
+
 export class StateService<T> {
   public state$: BehaviorSubject<T>;
 
@@ -42,7 +44,7 @@ export class StateServiceObserver<T> {
     return this.stateService.select(mapFn);
   }
 
-  public selectPart(part: string): Observable<Partial<T>> {
+  public selectPart<K>(part: string): Observable<K> {
     return this.stateService.select<any>(state => {
       return state[part];
     });

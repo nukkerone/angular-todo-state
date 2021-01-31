@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { uuidv4 } from "src/app/shared/utilities";
-import { Todo } from "../../Todos/interfaces";
+import { uuidv4 } from "../../shared/utilities";
+import { Todo } from "../../todos/interfaces";
+
 import {
   StateService,
   StateServiceManager,
@@ -14,7 +15,7 @@ interface TodoState {
 
 const initialTodoState = {
   todos: [],
-  selected: []
+  selected: [],
 };
 
 @Injectable({
@@ -40,14 +41,29 @@ export class TodoService {
       done: false
     }
 
-    this.stateManager.setState({ todos: [...todos, ...[newTodo]] })
+    this.stateManager.setState({
+      todos: [...todos, ...[newTodo]],
+    })
+  }
+
+  completeTodo(id: string) {
+    const todos = this.stateObserver.state.todos
+      .map(t => t.id === id ? { ...t, ...{ done: true } } : t);
+    
+    this.stateManager.setState({
+      todos: [...todos],
+    });
   }
 
   removeTodo(id: string) {
+    const todo = this.stateObserver.state.todos
+      .find(t => t.id === id);
     const todos = this.stateObserver.state.todos
       .filter(t => t.id !== id);
     
-    this.stateManager.setState({ todos: [...todos] })
+    this.stateManager.setState({
+      todos: [...todos],
+    });
   }
 
 }

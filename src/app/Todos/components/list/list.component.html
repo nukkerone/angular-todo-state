@@ -1,5 +1,14 @@
+<p>Pending todos: {{ pendingTodos }}</p>
 <ul>
-  <li *ngFor="let t of todoService.stateObserver.selectPart('todos') | async">
-    {{ t.content }} - <button class="btn btn-link py-0" (click)="onRemove(t.id)">Remove</button>
+  <li
+    *ngFor="let t of todoService.stateObserver.selectPart('todos') | async"
+    [ngClass]="{completed: t.done}"
+  >
+    <span>{{ t.content }}</span>
+    -
+    <button class="btn btn-link py-0" (click)="onCompleted(t.id)">
+      Complete
+    </button>
+    - <button class="btn btn-link py-0" (click)="onRemove(t.id)">Remove</button>
   </li>
 </ul>
