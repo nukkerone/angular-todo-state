@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { uuidv4 } from "src/app/shared/utilities";
 import { Todo } from "../../Todos/interfaces";
 import {
   StateService,
@@ -27,9 +28,19 @@ export class TodoService {
   constructor() {
     this.stateService = new StateService<TodoState>(initialTodoState);
     this.stateManager = new StateServiceManager<TodoState>(this.stateService);
+    this.stateObserver = new StateServiceObserver<TodoState>(this.stateService);
   }
 
-  /* public setState(newState: Partial<T>) {
-    return this.stateService.setState(newState);
-  } */
+  addTodo(content = '') {
+    const todos = this.stateObserver.state.todos;
+    const newTodo: Todo = {
+      id: uuidv4(),
+      content,
+      createdAt: new Date().toISOString(),
+      done: false
+    }
+
+    this.stateManager.setState({ todos: [...todos, ...[newTodo]] })
+  }
+
 }

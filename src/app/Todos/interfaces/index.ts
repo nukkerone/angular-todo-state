@@ -4,7 +4,7 @@ export interface Pagination {
 }
 
 export interface Todo {
-  id: number;
+  id: string;
   content: string;
   createdAt: string;
   done: boolean;

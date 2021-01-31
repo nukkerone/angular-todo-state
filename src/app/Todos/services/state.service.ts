@@ -1,4 +1,3 @@
-import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 
@@ -29,7 +28,11 @@ export class StateService<T> {
 }
 
 export class StateServiceObserver<T> {
-  constructor(private stateService: StateService<T>) {}
+  private stateService: StateService<T>;
+
+  constructor(stateService: StateService<T>) {
+    this.stateService = stateService;
+  }
 
   public get state(): T {
     return this.stateService.state;
@@ -37,6 +40,12 @@ export class StateServiceObserver<T> {
 
   public select<K>(mapFn: (state: T) => K): Observable<K> {
     return this.stateService.select(mapFn);
+  }
+
+  public selectPart(part: string): Observable<Partial<T>> {
+    return this.stateService.select<any>(state => {
+      return state[part];
+    });
   }
 }
 
