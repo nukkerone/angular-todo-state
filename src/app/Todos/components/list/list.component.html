@@ -1,5 +1,5 @@
 <ul>
   <li *ngFor="let t of todoService.stateObserver.selectPart('todos') | async">
-    {{ t.content }}
+    {{ t.content }} - <button class="btn btn-link py-0" (click)="onRemove(t.id)">Remove</button>
   </li>
 </ul>

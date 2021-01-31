@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TodoService } from "./services/todo-state.service";
+import { TodoService } from "../../services/todo-state.service";
 
 @Component({
   selector: "app-todo-list",
@@ -7,6 +7,10 @@ import { TodoService } from "./services/todo-state.service";
 })
 export class ListComponent {
   constructor(public todoService: TodoService) {
-    this.todoService.addTodo('Testing todo item');
+
+  }
+
+  onRemove(id: string) {
+    this.todoService.removeTodo(id);
   }
 }

@@ -43,4 +43,11 @@ export class TodoService {
     this.stateManager.setState({ todos: [...todos, ...[newTodo]] })
   }
 
+  removeTodo(id: string) {
+    const todos = this.stateObserver.state.todos
+      .filter(t => t.id !== id);
+    
+    this.stateManager.setState({ todos: [...todos] })
+  }
+
 }
